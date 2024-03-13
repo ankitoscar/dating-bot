@@ -17,7 +17,7 @@ func InitializeChat(malePersonality string, femalePersonality string) ChatThread
 
 	thread.Conversation = append(thread.Conversation, maleEntry)
 
-	var femaleUserPrompt string = "Generate an interesting message for starting a conversation"
+	var femaleUserPrompt string = "Generate an interesting reply"
 
 	var femaleEntry ChatEntry = CreateChatEntry(femalePersonality, femaleUserPrompt, femaleSystemPrompt)
 
