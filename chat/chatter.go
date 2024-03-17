@@ -1,7 +1,9 @@
 // This file contains all the types and methods used for handling the chats
 package chat
 
-import "time"
+import (
+	"time"
+)
 
 // Method for initialising the chat with the male and female personalities
 // The messages will be generated according to the personalities passed
@@ -27,30 +29,23 @@ func InitializeChat(malePersonality string, femalePersonality string) ChatThread
 }
 
 // Method for generating the reply of a message based on the previous message with a time delay
-func AddNextMessage(thread ChatThread, delay int) {
+func AddNextMessage(thread *ChatThread, delay int) {
 	var chatLength int = len(thread.Conversation)
 	var lastChat ChatEntry = thread.Conversation[chatLength-1]
 
 	var lastMessage string = lastChat.Message
 	var user_prompt string = "Generate a reply for : " + lastMessage + ". Keep the conversation interesting"
-	var sender string
-	var newEntry ChatEntry
+	var sender string = thread.Conversation[chatLength-2].Sender
+	var system_prompt string = thread.Conversation[chatLength-2].SystemPrompt
 
-	if lastChat.Sender == thread.FirstPerson {
-		sender = thread.SecondPerson
-	} else {
-		sender = thread.FirstPerson
-	}
-
-	newEntry = CreateChatEntry(
+	var newEntry ChatEntry = CreateChatEntry(
 		sender,
 		user_prompt,
-		lastChat.SystemPrompt,
+		system_prompt,
 	)
 
 	var replyDelay int = delay * int(time.Second)
+	thread.Conversation = append(thread.Conversation, newEntry)
 
 	time.Sleep(time.Duration(replyDelay))
-
-	thread.Conversation = append(thread.Conversation, newEntry)
 }

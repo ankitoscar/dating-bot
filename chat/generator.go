@@ -33,10 +33,10 @@ type ChatResponse struct {
 	Model             string `json:"model"`
 	SystemFingerprint string `json:"system_fingerprint"`
 	Choices           []struct {
-		Index        int           `json:"index"`
-		Message      []ChatMessage `json:"message"`
-		Logprobs     bool          `json:"logprobs"`
-		FinishReason string        `json:"finish_reason"`
+		Index        int         `json:"index"`
+		Message      ChatMessage `json:"message"`
+		Logprobs     bool        `json:"logprobs"`
+		FinishReason string      `json:"finish_reason"`
 	} `json:"choices"`
 	Usage struct {
 		PromptTokens     int `json:"prompt_tokens"`
@@ -99,8 +99,6 @@ func GenrateResponse(user_prompt string, system_prompt string) ChatResponse {
 	if err != nil {
 		log.Fatalf("Error in making request %s", err)
 	}
-
-	log.Printf("Status Code: %d", response.StatusCode)
 
 	defer response.Body.Close()
 

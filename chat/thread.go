@@ -1,7 +1,10 @@
 // This file contains types and methods for creating chat threads and entries
 package chat
 
-import "time"
+import (
+	"fmt"
+	"time"
+)
 
 // Type for chat thread, contains the two people involved and their conversation
 type ChatThread struct {
@@ -42,11 +45,19 @@ func CreateChatMessage(user_prompt string, system_prompt string) string {
 func CreateChatEntry(sender string, user_prompt string, system_prompt string) ChatEntry {
 	var message string = CreateChatMessage(user_prompt, system_prompt)
 
-	return ChatEntry{
+	var entry ChatEntry = ChatEntry{
 		Sender:       sender,
 		Message:      message,
 		Time:         time.Now(),
 		SystemPrompt: system_prompt,
 		Status:       "Sent",
 	}
+
+	PrintChatEntry(entry)
+
+	return entry
+}
+
+func PrintChatEntry(entry ChatEntry) {
+	fmt.Printf("[%s] %s: %s\n", entry.Time, entry.Sender, entry.Message)
 }

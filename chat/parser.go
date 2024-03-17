@@ -4,11 +4,9 @@ package chat
 func ParseRespone(response ChatResponse) []string {
 	var replies []string
 
-	for _, choice := range response.Choices {
-		for _, message := range choice.Message {
-			replies = append(replies, message.Content)
-		}
-	}
+	var reply string = response.Choices[0].Message.Content
+
+	replies = append(replies, reply)
 
 	return replies
 }
